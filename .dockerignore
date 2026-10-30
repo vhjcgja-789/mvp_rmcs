@@ -1,0 +1,6 @@
+# 构建镜像时不需要的东西
+.git/
+build/
+install/
+log/
+*.md

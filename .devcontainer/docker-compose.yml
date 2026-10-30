@@ -1,0 +1,18 @@
+# mvp_rmcs — Dev Containers 专用:直接用预构建镜像,不参与构建
+# 镜像由顶层 docker-compose.yml 构建(./code.sh 或 docker compose build)
+services:
+  mvp_rmcs:
+    image: mvp_rmcs:jazzy
+    user: "1000:1000"
+    network_mode: host
+    init: true
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    working_dir: /workspaces/mvp_rmcs
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - QT_X11_NO_MITSHM=1
+      - TZ=Asia/Shanghai
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    volumes:
+      - ..:/workspaces/mvp_rmcs:bind
+      - /tmp/.X11-unix:/tmp/.X11-unix

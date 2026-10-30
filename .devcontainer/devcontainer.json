@@ -1,0 +1,22 @@
+{
+  "name": "mvp_rmcs (ROS2 Jazzy 最小环境)",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "mvp_rmcs",
+  "workspaceFolder": "/workspaces/mvp_rmcs",
+  "initializeCommand": "bash ${localWorkspaceFolder}/.devcontainer/scripts/ensure-proxy.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "smilerobotics.urdf"
+      ],
+      "settings": {
+        "C_Cpp.default.cppStandard": "c++17",
+        "cmake.configureOnOpen": false
+      }
+    }
+  },
+  "postCreateCommand": "echo '就绪: /workspaces/mvp_rmcs <-> 主机 mvp_rmcs/'"
+}
