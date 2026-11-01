@@ -1,0 +1,14 @@
+# 阶段2:自定义动作类型 —— 解决"任务要跑很久,中途还要汇报进度、能喊停"的问题。
+# 格式:用两个 --- 分成三段:目标(goal) / 结果(result) / 反馈(feedback)。
+# 构建时会生成 Goal、Result、Feedback 三个结构体,外加底层用到的几个服务和话题。
+
+# 目标:调用方想让机器人走多远(米)
+float32 distance
+---
+# 结果:任务结束时只回一次
+bool success       # 是否走完全程(被取消则为 false)
+float32 traveled   # 实际走了多少米
+---
+# 反馈:执行过程中持续发布,可以有很多条
+float32 traveled   # 已走了多少米
+float32 percent    # 完成百分比 0~100

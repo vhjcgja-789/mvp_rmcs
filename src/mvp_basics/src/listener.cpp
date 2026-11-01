@@ -9,7 +9,7 @@
 // 收到消息时被 ROS2 调用的回调函数(订阅者是被动的:数据来找你,
 // 而不是你主动去取)。参数是共享指针,消息用完自动释放。
 void on_hello(const mvp_basics::msg::Hello::SharedPtr msg) {
-  RCLCPP_INFO(rclcpp::get_logger("listener"), "收到：%ds,%s",
+  RCLCPP_INFO(rclcpp::get_logger("listener"), "收到:#%d, %s",
               msg->seq, msg->content.c_str());
 }
 

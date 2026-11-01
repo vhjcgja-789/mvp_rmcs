@@ -12,12 +12,14 @@ endif()
 # 找齐依赖包(对应 package.xml 里声明的依赖)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)  # 阶段2:动作的客户端/服务端库
 find_package(rosidl_default_generators REQUIRED)
 
-# 关键一步:让 colcon 从 msg/ 和 srv/ 生成 C++ 代码(msg 与 srv 同源机制)。
+# 关键一步:让 colcon 从 msg/ srv/ action/ 生成 C++ 代码(三者同源机制)。
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Hello.msg"
   "srv/SetHello.srv"
+  "action/MoveDistance.action"
 )
 
 # 两个可执行文件:talker(发布)、listener(订阅)
@@ -27,17 +29,17 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 add_executable(talker src/talker.cpp)
-ament_target_dependencies(talker rclcpp)
+ament_target_dependencies(talker rclcpp rclcpp_action)
 target_link_libraries(talker "${cpp_typesupport_target}")
 
 add_executable(listener src/listener.cpp)
 ament_target_dependencies(listener rclcpp)
 target_link_libraries(listener "${cpp_typesupport_target}")
 
-# 装到哪:可执行文件进 lib/包名,launch 文件进 share/包名(ros2 run/launch 按此查找)
+# 装到哪:可执行文件进 lib/包名,launch 和 config 进 share/包名(ros2 run/launch 按此查找)
 install(TARGETS talker listener
   DESTINATION lib/${PROJECT_NAME})
-install(DIRECTORY launch
+install(DIRECTORY launch config
   DESTINATION share/${PROJECT_NAME})
 
 ament_package()

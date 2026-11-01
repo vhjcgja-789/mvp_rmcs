@@ -1,0 +1,6 @@
+# 另一套配置:同一份程序,换个文件就是另一种行为。
+# 对照 RMCS:sentry.yaml / omni-infantry.yaml 等,用 `robot:=xxx` 选择加载哪一份。
+talker:
+  ros__parameters:
+    publish_rate_hz: 10.0
+    prefix: "[FAST] "
