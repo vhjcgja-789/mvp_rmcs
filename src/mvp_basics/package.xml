@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <!-- 包的"身份证":名字、描述、依赖清单。colcon 靠它知道怎么编译这个包。 -->
+  <name>mvp_basics</name>
+  <version>0.0.1</version>
+  <description>阶段0:最简发布/订阅 + 自定义消息,ROS2 基础入门</description>
+  <maintainer email="yuyuyu@example.com">yuyuyu</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- 运行时依赖:rclcpp 是写 C++ 节点的核心库 -->
+  <depend>rclcpp</depend>
+
+  <!-- 自定义消息需要:构建期用生成器,运行期用运行时库 -->
+  <build_depend>rosidl_default_generators</build_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
+  <!-- 声明"本包提供自定义消息",让别的包也能 include 我们的消息 -->
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
