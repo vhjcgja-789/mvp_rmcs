@@ -6,6 +6,8 @@ services:
     user: "1000:1000"
     network_mode: host
     init: true
+    # USB 透传沿用 RMCS:privileged + 绑定整个 /dev,板子重插后设备号变化也能看到
+    privileged: true
     command: /bin/sh -c "while sleep 1000; do :; done"
     working_dir: /workspaces/mvp_rmcs
     environment:
@@ -14,5 +16,6 @@ services:
       - TZ=Asia/Shanghai
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
     volumes:
+      - /dev:/dev:bind
       - ..:/workspaces/mvp_rmcs:bind
       - /tmp/.X11-unix:/tmp/.X11-unix

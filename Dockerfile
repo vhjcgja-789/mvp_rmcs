@@ -35,7 +35,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         #   zsh              默认 shell(下面配合 oh-my-zsh 使用)
         #   bash-completion  命令 TAB 补全增强
         #   python3-pip      Python 包管理(pip install 装第三方库)
-        git vim tmux curl wget zsh bash-completion python3-pip \
+        #   usbutils         lsusb,确认容器能看到板子(VID a11c)
+        git vim tmux curl wget zsh bash-completion python3-pip usbutils \
+    && rm -rf /var/lib/apt/lists/*
+
+# ---- 编译器:GCC 14 ----
+# librmcs v3.1.0 用到 C++23 的 <print>,noble 默认的 GCC 13 没有;做法同 RMCS Dockerfile(rmcs-develop 段)
+RUN apt-get update && apt-get install -y --no-install-recommends gcc-14 g++-14 \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 50 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 50 \
     && rm -rf /var/lib/apt/lists/*
 
 # 给 ubuntu 用户免密 sudo:容器里装系统包/改配置不用输密码
@@ -59,3 +67,16 @@ RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/
     && echo '[ -f ~/env_setup.zsh ] && . ~/env_setup.zsh' >> ~/.zshrc
 
 WORKDIR /workspaces/mvp_rmcs
+
+# ---- 工作空间依赖:由各包 package.xml 声明,rosdep 安装(Dockerfile 不写死包名) ----
+# 只把 src 下的 package.xml 绑定进来(见 .dockerignore),改源码不会让这一层失效;
+# 改了 package.xml 就重新 build 镜像,换机器时同样重放这一步。
+USER root
+RUN --mount=type=bind,source=src,target=/tmp/src \
+    apt-get update \
+    && rosdep update --rosdistro ${ROS_DISTRO} \
+    && rosdep install --from-paths /tmp/src --ignore-src -y --rosdistro ${ROS_DISTRO} \
+    && rm -rf /var/lib/apt/lists/*
+USER ubuntu
+# 给普通用户也建好 rosdep 缓存,容器内可直接重跑 rosdep install
+RUN rosdep update --rosdistro ${ROS_DISTRO}

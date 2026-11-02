@@ -1,11 +1,21 @@
 # mvp_rmcs — 构建镜像 + CLI 通道(Dev Containers 用 .devcontainer/docker-compose.yml)
 services:
   mvp_rmcs:
-    build: .
+    build:
+      context: .
+      # rosdep update 要访问 raw.githubusercontent.com:宿主机环境里设了代理就透传进构建,不设则不生效。
+      # 构建容器里的 127.0.0.1 不是宿主机,代理地址要写 docker0 网关(例:HTTPS_PROXY=http://172.17.0.1:7892),
+      # 且代理须监听在该网卡上(本机由 ensure-proxy.sh 的 socat 转发提供)
+      args:
+        - HTTP_PROXY
+        - HTTPS_PROXY
+        - NO_PROXY
     image: mvp_rmcs:jazzy
     user: "1000:1000"
     network_mode: host
     init: true
+    # USB 透传沿用 RMCS:privileged + 绑定整个 /dev,板子重插后设备号变化也能看到
+    privileged: true
     command: /bin/sh -c "while sleep 1000; do :; done"
     working_dir: /workspaces/mvp_rmcs
     environment:
@@ -14,5 +24,6 @@ services:
       - TZ=Asia/Shanghai
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
     volumes:
+      - /dev:/dev:bind
       - .:/workspaces/mvp_rmcs:bind
       - /tmp/.X11-unix:/tmp/.X11-unix

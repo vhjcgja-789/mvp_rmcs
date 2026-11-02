@@ -4,3 +4,6 @@ build/
 install/
 log/
 *.md
+# 构建期只需要各包的 package.xml(供 rosdep 安装依赖),源码不进构建上下文
+src/**
+!src/**/package.xml

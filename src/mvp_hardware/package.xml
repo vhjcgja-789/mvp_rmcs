@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mvp_hardware</name>
+  <version>0.0.0</version>
+  <description>哨兵硬件层:每块板一个 ros2_control SystemInterface,设备协议取自 RMCS</description>
+  <maintainer email="yuyuyu@todo.todo">f378u5</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <!-- librmcs 用 pkg-config 查找 libusb -->
+  <buildtool_depend>pkg-config</buildtool_depend>
+
+  <depend>libusb-1.0-dev</depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

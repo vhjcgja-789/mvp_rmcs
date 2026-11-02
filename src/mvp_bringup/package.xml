@@ -1,16 +1,21 @@
 <?xml version="1.0"?>
-<!-- RMCS 对照：用 launch 组织组件清单和参数，对应 rmcs_bringup。 -->
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>mvp_bringup</name>
-  <version>0.0.1</version>
-  <description>单关节闭环的原生组件容器启动配置</description>
-  <maintainer email="yuyuyu@example.com">yuyuyu</maintainer>
-  <license>Apache-2.0</license>
-  <buildtool_depend>ament_cmake_auto</buildtool_depend>
-  <exec_depend>launch</exec_depend>
-  <exec_depend>launch_ros</exec_depend>
-  <exec_depend>rclcpp_components</exec_depend>
-  <exec_depend>mvp_core</exec_depend>
+  <version>0.0.0</version>
+  <description>哨兵启动:URDF、控制器配置、launch</description>
+  <maintainer email="yuyuyu@todo.todo">f378u5</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>controller_manager</exec_depend>
+  <!-- 提供 ros2 control 命令行 -->
+  <exec_depend>ros2controlcli</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
