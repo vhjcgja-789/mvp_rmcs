@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- RMCS 对照：消息包与实现包分离，对应 rmcs_msgs。 -->
+<package format="3">
+  <name>mvp_msgs</name>
+  <version>0.0.1</version>
+  <description>单关节闭环的带时间戳标量消息</description>
+  <maintainer email="yuyuyu@example.com">yuyuyu</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <depend>std_msgs</depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

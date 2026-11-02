@@ -1,0 +1,18 @@
+# RMCS 对照：心跳频率从 executor 移到源头节点；接线在 launch，这里只放运行参数。
+/yaw/motor:
+  ros__parameters:
+    update_rate: 1000.0
+    inertia: 0.01
+    damping: 0.01
+
+/yaw/angle_pid:
+  ros__parameters:
+    kp: 5.0
+    ki: 0.0
+    kd: 0.0
+
+/yaw/velocity_pid:
+  ros__parameters:
+    kp: 0.1
+    ki: 0.0
+    kd: 0.0

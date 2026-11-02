@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- RMCS 对照：硬件和控制器放在同一个实现包，对应 rmcs_core。 -->
+<package format="3">
+  <name>mvp_core</name>
+  <version>0.0.1</version>
+  <description>原生 ROS2 单关节硬件与 PID 可组合节点</description>
+  <maintainer email="yuyuyu@example.com">yuyuyu</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>rcl_interfaces</depend>
+  <depend>mvp_msgs</depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

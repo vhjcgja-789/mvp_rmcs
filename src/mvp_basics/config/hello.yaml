@@ -1,9 +1,0 @@
-# 阶段3补充:参数文件 —— 解决"参数一多,写在 launch/命令行里就乱"的问题。
-# 对照 RMCS:rmcs_bringup/config/sentry.yaml 就是这种文件,一台机器人一份。
-#
-# 结构:顶层键 = 节点名,下面固定一层 ros__parameters,再往下才是参数。
-# 一个文件可以同时写多个节点的参数,每个节点只取自己名字下的那一块。
-talker:
-  ros__parameters:
-    publish_rate_hz: 2.0
-    prefix: "[RM] "   # 在 YAML 文件里加引号很自然,不再有命令行那层引号嵌套的坑
