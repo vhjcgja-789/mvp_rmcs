@@ -1,0 +1,7 @@
+<library path="mvp_hardware">
+  <class name="mvp_hardware/CBoardSystem"
+         type="mvp_hardware::CBoardSystem"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>librmcs CBoard(C 板)硬件组件</description>
+  </class>
+</library>

@@ -39,11 +39,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git vim tmux curl wget zsh bash-completion python3-pip usbutils \
     && rm -rf /var/lib/apt/lists/*
 
-# ---- 编译器:GCC 14 ----
+# ---- 编译器与语言服务器:GCC 14 + clangd ----
 # librmcs v3.1.0 用到 C++23 的 <print>,noble 默认的 GCC 13 没有;做法同 RMCS Dockerfile(rmcs-develop 段)
-RUN apt-get update && apt-get install -y --no-install-recommends gcc-14 g++-14 \
+# clangd-18:VSCode clangd 插件后端(代码跳转/补全/诊断),同样支持 C++23,配 compile_commands.json 使用
+RUN apt-get update && apt-get install -y --no-install-recommends gcc-14 g++-14 clangd-18 \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 50 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 50 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 50 \
     && rm -rf /var/lib/apt/lists/*
 
 # 给 ubuntu 用户免密 sudo:容器里装系统包/改配置不用输密码

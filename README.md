@@ -63,6 +63,16 @@ ros2 run mvp_hardware board_probe d4-2184               # 打印 connected 即�
 ros2 run mvp_hardware board_probe d4-2184 --skip-version-check   # 上一条报固件版本不符时再试
 ```
 
+## 阶段 1 验证:一块板 + 一个 3508,只读反馈
+
+```bash
+ros2 launch mvp_bringup bringup.launch.py
+ros2 control list_hardware_interfaces          # 应有 chassis_wheel_lb/{position,velocity,effort}
+ros2 topic echo /joint_states                  # 手拨电机,position(rad)/velocity(rad/s)跟着变
+```
+
+板子没连上时 `on_configure` 打印 librmcs 设备发现报告,controller_manager 随即退出。
+
 ## 目录结构
 
 ```

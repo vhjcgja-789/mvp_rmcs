@@ -10,6 +10,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
 
 # librmcs:板子的 USB 收发 SDK。
 # 来源:RMCS/rmcs_ws/src/rmcs_core/CMakeLists.txt 第 16–24 行,原样照抄(同 URL、同 SHA256)。
@@ -23,6 +25,17 @@ FetchContent_Declare(
   DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 FetchContent_MakeAvailable(librmcs)
+
+# 硬件组件插件:每块板一个 SystemInterface
+add_library(${PROJECT_NAME} SHARED src/c_board_system.cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(${PROJECT_NAME}
+  librmcs-sdk
+  hardware_interface::hardware_interface
+  pluginlib::pluginlib
+)
+pluginlib_export_plugin_description_file(hardware_interface mvp_hardware.xml)
+install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib)
 
 # 阶段 0 验证工具:构造一块 CBoard,确认容器内能连上板子
 add_executable(board_probe tools/board_probe.cpp)

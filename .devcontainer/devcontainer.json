@@ -7,13 +7,16 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscode.cpptools",
+        "llvm-vs-code-extensions.vscode-clangd",
         "ms-vscode.cmake-tools",
         "ms-python.python",
-        "smilerobotics.urdf"
+        "smilerobotics.urdf",
+        "mhutchie.git-graph",
+        "yzhang.markdown-all-in-one",
+        "marscode.marscode-extension"
       ],
       "settings": {
-        "C_Cpp.default.cppStandard": "c++17",
+        "C_Cpp.default.cppStandard": "c++23",
         "cmake.configureOnOpen": false
       }
     }
